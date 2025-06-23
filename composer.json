@@ -1,0 +1,78 @@
+{
+    "name": "schmeits/filament-4-tabler-icons",
+    "description": "This is my package filament-4-tabler-icons",
+    "keywords": [
+        "schmeits",
+        "laravel",
+        "filament-4-tabler-icons"
+    ],
+    "homepage": "https://github.com/schmeits/filament-4-tabler-icons",
+    "support": {
+        "issues": "https://github.com/schmeits/filament-4-tabler-icons/issues",
+        "source": "https://github.com/schmeits/filament-4-tabler-icons"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tally Schmeits",
+            "email": "tally@schmeits.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^v4.0.0-beta",
+        "secondnetwork/blade-tabler-icons": "^v3.34.0",
+        "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^8.0",
+        "larastan/larastan": "^2.9",
+        "orchestra/testbench": "^9.0",
+        "pestphp/pest": "^3.2",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Schmeits\\FilamentTablerIcons\\": "src/",
+            "Schmeits\\FilamentTablerIcons\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Schmeits\\FilamentTablerIcons\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Schmeits\\FilamentTablerIcons\\FilamentTablerIconsServiceProvider"
+            ],
+            "aliases": {
+                "FilamentTablerIcons": "Schmeits\\FilamentTablerIcons\\Facades\\FilamentTablerIcons"
+            }
+        }
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true
+}
