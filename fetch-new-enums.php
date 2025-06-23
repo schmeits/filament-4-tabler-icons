@@ -1,4 +1,5 @@
 <?php
+
 // This script reads all SVGs from the local vendor directory and generates the enum file.
 
 $svgDir = __DIR__ . '/vendor/secondnetwork/blade-tabler-icons/resources/svg';
