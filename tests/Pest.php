@@ -1,5 +1,5 @@
 <?php
 
-use Schmeits\FilamentPhosphorIcons\Tests\TestCase;
+use Schmeits\FilamentTablerIcons\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

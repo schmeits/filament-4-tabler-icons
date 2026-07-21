@@ -1,6 +1,6 @@
 <?php
 
-namespace Schmeits\FilamentPhosphorIcons\Tests;
+namespace Schmeits\FilamentTablerIcons\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Schmeits\FilamentPhosphorIcons\FilamentPhosphorIconsServiceProvider;
+use Schmeits\FilamentTablerIcons\FilamentTablerIconsServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -25,7 +25,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Schmeits\\FilamentPhosphorIcons\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Schmeits\\FilamentTablerIcons\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -44,7 +44,7 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            FilamentPhosphorIconsServiceProvider::class,
+            FilamentTablerIconsServiceProvider::class,
         ];
     }
 
