@@ -7,9 +7,9 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class FilamentTablerIconsServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'filament-4-phosphor-icons';
+    public static string $name = 'filament-4-tabler-icons';
 
-    public static string $viewNamespace = 'filament-4-phosphor-icons';
+    public static string $viewNamespace = 'filament-4-tabler-icons';
 
     public function configurePackage(Package $package): void
     {

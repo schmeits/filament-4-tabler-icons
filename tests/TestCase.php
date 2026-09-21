@@ -17,6 +17,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Schmeits\FilamentTablerIcons\FilamentTablerIconsServiceProvider;
+use secondnetwork\TablerIcons\BladeTablerIconsServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -36,6 +37,11 @@ class TestCase extends Orchestra
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
+            // Testbench does not run package discovery (only dusk and ray are
+            // auto-loaded), so the icon source must be registered here explicitly.
+            // Without this line no Tabler icon resolves in the tests, even
+            // though it works fine in a real application.
+            BladeTablerIconsServiceProvider::class,
             FilamentServiceProvider::class,
             FormsServiceProvider::class,
             InfolistsServiceProvider::class,
