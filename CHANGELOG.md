@@ -2,7 +2,7 @@
 
 All notable changes to `filament-4-tabler-icons` will be documented in this file.
 
-## Unreleased
+## 1.1.0 - 2026-10-13
 
 ### Added
 - Support for Filament 5 and Laravel 13, next to Filament 4.
