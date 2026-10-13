@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * src/FilamentTablerIconsServiceProvider.php
+ *
+ * Registers the package with Laravel. The icons themselves come from
+ * secondnetwork/blade-tabler-icons; this package only adds the Tabler enum.
+ */
+
 namespace Schmeits\FilamentTablerIcons;
 
 use Spatie\LaravelPackageTools\Package;
@@ -9,19 +18,8 @@ class FilamentTablerIconsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-4-tabler-icons';
 
-    public static string $viewNamespace = 'filament-4-tabler-icons';
-
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name);
-    }
-
-    public function packageRegistered(): void {}
-
-    public function packageBooted(): void {}
-
-    protected function getAssetPackageName(): ?string
-    {
-        return 'schmeits/filament-4-tabler-icons';
     }
 }

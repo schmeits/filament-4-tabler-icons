@@ -1,6 +1,10 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
+ * tests/TablerEnumTest.php
+ *
  * Smoke tests for the public enum this package exposes.
  *
  * WHY: the Tabler enum is the entire public API. Consumers type-hint against it
@@ -44,7 +48,7 @@ it('handles every Filament IconSize without error', function () {
     // Should getIconForSize ever gain a match() without a default, this catches
     // a new IconSize in Filament before the consumer runs into it.
     foreach (IconSize::cases() as $size) {
-        expect(Tabler::Abacus->getIconForSize($size))->toBeString()->not->toBeEmpty();
+        expect(Tabler::Abacus->getIconForSize($size))->toStartWith('tabler-');
     }
 });
 
@@ -67,14 +71,31 @@ it('uses kebab-case icon names exclusively', function () {
     expect($invalid)->toBeEmpty();
 });
 
-it('deliberately contains no filled variants', function () {
+it('deliberately contains no filled variants of an icon it already has', function () {
     // The enum only covers the outline set. The source additionally ships
     // -filled and -f variants. That is a deliberate choice; this test locks it
     // in so a half-finished expansion stands out instead of landing silently.
-    $filled = array_filter(
-        array_column(Tabler::cases(), 'value'),
-        fn (string $value): bool => str_ends_with($value, '-filled') || str_ends_with($value, '-f'),
-    );
+    $values = array_column(Tabler::cases(), 'value');
+    $present = array_flip($values);
+
+    $filled = array_filter($values, function (string $value) use ($present): bool {
+        foreach (['-filled', '-f'] as $suffix) {
+            if (str_ends_with($value, $suffix) && isset($present[substr($value, 0, -strlen($suffix))])) {
+                return true;
+            }
+        }
+
+        return false;
+    });
 
     expect($filled)->toBeEmpty();
+});
+
+it('keeps icons whose name only happens to end in -f', function () {
+    // Regression: the generator used to skip every name ending in "-f", which
+    // silently dropped the letter F icons. They have no base file, so they are
+    // real icons and not filled variants.
+    expect(Tabler::LetterF->value)->toBe('letter-f')
+        ->and(Tabler::CircleLetterF->value)->toBe('circle-letter-f')
+        ->and(Tabler::SquareRoundedLetterF->value)->toBe('square-rounded-letter-f');
 });
