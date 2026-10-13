@@ -10,7 +10,7 @@ All [Tabler icons](https://tabler.io/icons) as a typed enum for Filament, so you
 
 | Package | Filament | Laravel | PHP |
 |---|---|---|---|
-| 1.1 | 4.x and 5.x | 11, 12 and 13 | 8.2 or higher (Laravel 13: 8.3 or higher) |
+| 1.1 | 4.x and 5.x | 12 and 13 | 8.2 or higher (Laravel 13: 8.3 or higher) |
 | 1.0 | 4.x | 11 and 12 | 8.2 or higher |
 
 The package name still says "filament-4" for backwards compatibility; it works on Filament 5 as well.

@@ -70,7 +70,7 @@ it('finds an existing SVG file for every Filament IconSize', function (IconSize 
     expect($missing)->toBeEmpty(
         'Missing SVG files for size ' . $size->value . ': ' . implode(', ', array_slice($missing, 0, 20)),
     );
-})->with(IconSize::cases());
+})->with(fn (): array => IconSize::cases());
 
 it('ships at least as many icons in the source as the enum points at', function () {
     // A sanity check on the source itself: if the number of files drops below
