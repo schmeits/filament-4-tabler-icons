@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * tests/TestCase.php
+ *
+ * Base test case: boots a minimal Filament app with the Tabler icon set.
+ */
+
 namespace Schmeits\FilamentTablerIcons\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -12,7 +20,6 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -21,16 +28,10 @@ use secondnetwork\TablerIcons\BladeTablerIconsServiceProvider;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Schmeits\\FilamentTablerIcons\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
-    }
-
-    protected function getPackageProviders($app)
+    /**
+     * @return array<int, class-string>
+     */
+    protected function getPackageProviders($app): array
     {
         return [
             ActionsServiceProvider::class,
@@ -52,15 +53,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             FilamentTablerIconsServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-4-phosphor-icons_table.php.stub';
-        $migration->up();
-        */
     }
 }

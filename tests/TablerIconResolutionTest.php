@@ -1,6 +1,10 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
+ * tests/TablerIconResolutionTest.php
+ *
  * Smoke tests that prove every enum case actually points at an existing SVG
  * in the icon source secondnetwork/blade-tabler-icons.
  *
@@ -22,7 +26,13 @@ use Schmeits\FilamentTablerIcons\Support\Icons\Tabler;
  */
 function tablerSvgPath(): string
 {
-    return app(Factory::class)->all()['tabler']['paths'][0];
+    $path = data_get(app(Factory::class)->all(), 'tabler.paths.0');
+
+    if (! is_string($path)) {
+        throw new RuntimeException('The tabler icon set is not registered.');
+    }
+
+    return $path;
 }
 
 it('finds an SVG file on disk for every enum case', function () {
@@ -60,13 +70,13 @@ it('finds an existing SVG file for every Filament IconSize', function (IconSize 
     expect($missing)->toBeEmpty(
         'Missing SVG files for size ' . $size->value . ': ' . implode(', ', array_slice($missing, 0, 20)),
     );
-})->with(IconSize::cases());
+})->with(fn (): array => IconSize::cases());
 
 it('ships at least as many icons in the source as the enum points at', function () {
     // A sanity check on the source itself: if the number of files drops below
     // the number of enum cases, something is badly wrong or half-installed
     // upstream.
-    $fileCount = count(glob(tablerSvgPath() . '/*.svg'));
+    $fileCount = count(glob(tablerSvgPath() . '/*.svg') ?: []);
 
     expect($fileCount)->toBeGreaterThanOrEqual(count(Tabler::cases()));
 });
@@ -101,6 +111,36 @@ it('silently falls back to the fallback icon for an unknown icon', function () {
 
     expect($fallback)->toContain('<svg')
         ->and($fallback)->toBe($section);
+});
+
+it('covers every icon from the source with the enum', function () {
+    // The reverse check: if the source ships new icons, the enum is missing
+    // them. That is not a crash but a gap we deliberately want to see after a
+    // dependency upgrade, so we can regenerate the enum with `composer generate`.
+    $names = array_map(fn (string $file): string => basename($file, '.svg'), glob(tablerSvgPath() . '/*.svg') ?: []);
+    $available = array_flip($names);
+
+    $isVariant = function (string $name) use ($available): bool {
+        foreach (['-filled', '-f'] as $suffix) {
+            if (str_ends_with($name, $suffix) && isset($available[substr($name, 0, -strlen($suffix))])) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    $fromSource = array_filter($names, fn (string $name): bool => ! $isVariant($name));
+    $missing = array_values(array_diff($fromSource, array_column(Tabler::cases(), 'value')));
+
+    expect($missing)->toBeEmpty(
+        count($missing) . ' icons missing from the enum, run `composer generate`: ' . implode(', ', array_slice($missing, 0, 20)),
+    );
+});
+
+it('resolves the letter F icons to a real file', function () {
+    // Regression for the generator bug that dropped every name ending in "-f".
+    expect(file_exists(tablerSvgPath() . '/' . Tabler::LetterF->value . '.svg'))->toBeTrue();
 });
 
 it('does throw an error for an unknown icon set', function () {

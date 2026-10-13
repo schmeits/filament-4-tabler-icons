@@ -1,10 +1,15 @@
 {
     "name": "schmeits/filament-4-tabler-icons",
-    "description": "This is my package filament-4-tabler-icons",
+    "description": "Tabler icons as a typed enum for Filament 4 and 5, built on blade-tabler-icons.",
     "keywords": [
         "schmeits",
         "laravel",
-        "filament-4-tabler-icons"
+        "filament",
+        "filament-plugin",
+        "icons",
+        "tabler",
+        "tabler-icons",
+        "blade-icons"
     ],
     "homepage": "https://github.com/schmeits/filament-4-tabler-icons",
     "support": {
@@ -21,18 +26,18 @@
     ],
     "require": {
         "php": "^8.2",
-        "filament/filament": "^v4.0.0-beta",
-        "secondnetwork/blade-tabler-icons": "^v3.34.0",
+        "filament/filament": "^4.0|^5.0",
+        "secondnetwork/blade-tabler-icons": "^3.49",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
-        "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^10.0",
-        "pestphp/pest": "^3.2",
-        "pestphp/pest-plugin-arch": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.2|^4.0",
+        "pestphp/pest-plugin-arch": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
@@ -40,8 +45,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Schmeits\\FilamentTablerIcons\\": "src/",
-            "Schmeits\\FilamentTablerIcons\\Database\\Factories\\": "database/factories/"
+            "Schmeits\\FilamentTablerIcons\\": "src/"
         }
     },
     "autoload-dev": {
@@ -54,7 +58,8 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "generate": "@php bin/generate-enum.php"
     },
     "config": {
         "sort-packages": true,
@@ -67,12 +72,8 @@
         "laravel": {
             "providers": [
                 "Schmeits\\FilamentTablerIcons\\FilamentTablerIconsServiceProvider"
-            ],
-            "aliases": {
-                "FilamentTablerIcons": "Schmeits\\FilamentTablerIcons\\Facades\\FilamentTablerIcons"
-            }
+            ]
         }
     },
-    "minimum-stability": "beta",
     "prefer-stable": true
 }
